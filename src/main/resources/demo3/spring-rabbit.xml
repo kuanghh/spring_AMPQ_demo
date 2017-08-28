@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	   xsi:schemaLocation="http://www.springframework.org/schema/rabbit
+           http://www.springframework.org/schema/rabbit/spring-rabbit.xsd
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<!--异步获取数据的例子 -->
+	<rabbit:connection-factory id="connectionFactory" host="localhost" port="5672" username="guest" password="guest"  />
+
+	<rabbit:template id="rabbitTemplate" connection-factory="connectionFactory" />
+
+	<rabbit:admin id="admin" connection-factory="connectionFactory" />
+
+	<!--不配置name的话，会报错-->
+	<rabbit:queue id="myQueue" name="myQueue" />
+
+	<rabbit:direct-exchange id="myExchange" name="myExchange"  >
+		<!--把queue配置到Exchange当中-->
+		<rabbit:bindings>
+			<rabbit:binding queue="myQueue" key="myQueue"/>
+		</rabbit:bindings>
+	</rabbit:direct-exchange>
+
+
+	<bean id="myListener" class="com.khh.demo3.listener.POJOListener"/>
+
+	<bean id="messageConverter" class="org.springframework.amqp.support.converter.SimpleMessageConverter"/>
+
+	<!--配置监听适配器,构造方法需要传一个参数，代表着自定义的delegate(消息代理)
+	其中还需要配置一个参数：defaultListenerMethod，其代表了自定义消息代理中的方法名称，例如：void handleMessage() ,其就是handleMessage
+	-->
+	<bean id="messageListenerAdapter" class="org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter">
+		<constructor-arg ref="myListener"/>
+		<property name="defaultListenerMethod" value="myMessage"/>
+		<property name="messageConverter" ref="messageConverter"/>
+	</bean>
+
+	<rabbit:listener-container connection-factory="connectionFactory">
+		<rabbit:listener ref="messageListenerAdapter" queues="myQueue"   />
+	</rabbit:listener-container>
+
+
+
+</beans>
