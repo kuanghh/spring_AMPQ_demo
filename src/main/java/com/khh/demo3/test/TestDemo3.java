@@ -3,6 +3,7 @@ package com.khh.demo3.test;
 import com.khh.entity.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.amqp.core.Exchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class TestDemo3 {
     @Autowired
     private Queue queue;
 
+    @Autowired
+    private Exchange myExchange;
+
     /**
      * 因为在spring.rabbit.xml中 配置了 listen-container ，配置了MyListener对myQueue的RoutingKey监听，
      * 当send信息到myQueue的时候，MyListener会监听得到
@@ -35,7 +39,8 @@ public class TestDemo3 {
      */
     @Test
     public void test1() throws Exception{
-        rabbitTemplate.convertAndSend(queue.getName(),new User(12,"用户12",new Date()));
+        rabbitTemplate.setExchange(myExchange.getName());
+        rabbitTemplate.convertAndSend("routingKey_queue",new User(12,"用户12",new Date()));
 //        rabbitTemplate.convertAndSend(queue.getName(),"1324");
         Thread.sleep(2000);
     }

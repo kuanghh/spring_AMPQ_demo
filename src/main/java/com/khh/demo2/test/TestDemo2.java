@@ -3,6 +3,7 @@ package com.khh.demo2.test;
 import com.khh.entity.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.amqp.core.Exchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class TestDemo2 {
     private RabbitTemplate rabbitTemplate;
 
     @Autowired
+    private Exchange myExchange;
+
+    @Autowired
     private Queue queue;
 
     /**
@@ -32,6 +36,10 @@ public class TestDemo2 {
      */
     @Test
     public void test1() throws Exception{
-        rabbitTemplate.convertAndSend(queue.getName(),new User(12,"用户12",new Date()));
+        //没有这一行的话，会接收不到信息，因为Exchange是通过routingKey绑定Queue的
+        //如果没有指定Exchange，那么消息不会发送到绑定了Exchange的Queue,它默认的Exchange是""
+        rabbitTemplate.setExchange(myExchange.getName());
+        rabbitTemplate.convertAndSend("routingKey_queue",new User(12,"用户12",new Date()));
+        Thread.sleep(1000);
     }
 }

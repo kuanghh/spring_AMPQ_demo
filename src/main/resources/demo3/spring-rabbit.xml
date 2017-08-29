@@ -21,7 +21,7 @@
 	<rabbit:direct-exchange id="myExchange" name="myExchange"  >
 		<!--把queue配置到Exchange当中-->
 		<rabbit:bindings>
-			<rabbit:binding queue="myQueue" key="myQueue"/>
+			<rabbit:binding queue="myQueue" key="routingKey_queue"/>
 		</rabbit:bindings>
 	</rabbit:direct-exchange>
 
