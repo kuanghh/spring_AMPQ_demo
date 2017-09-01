@@ -1,9 +1,6 @@
-package com.khh.noframework.workqueues;
+package com.khh.noframework.b_workqueues;
 
 import com.rabbitmq.client.*;
-
-import java.io.IOException;
-import java.util.Arrays;
 
 /**
  * Created by 951087952@qq.com on 2017/9/1.

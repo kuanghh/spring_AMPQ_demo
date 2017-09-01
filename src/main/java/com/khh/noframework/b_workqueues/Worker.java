@@ -1,4 +1,4 @@
-package com.khh.noframework.workqueues;
+package com.khh.noframework.b_workqueues;
 
 import com.rabbitmq.client.*;
 

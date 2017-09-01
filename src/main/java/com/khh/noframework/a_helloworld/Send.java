@@ -1,4 +1,4 @@
-package com.khh.noframework.helloworld;
+package com.khh.noframework.a_helloworld;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
