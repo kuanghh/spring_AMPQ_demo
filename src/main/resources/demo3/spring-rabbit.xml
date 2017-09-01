@@ -26,7 +26,7 @@
 	</rabbit:direct-exchange>
 
 
-	<bean id="myListener" class="com.khh.demo3.listener.POJOListener"/>
+	<bean id="myListener" class="com.khh.u_spring.demo3.listener.POJOListener"/>
 
 	<bean id="messageConverter" class="org.springframework.amqp.support.converter.SimpleMessageConverter"/>
 

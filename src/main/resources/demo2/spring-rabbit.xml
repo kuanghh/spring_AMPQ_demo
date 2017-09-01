@@ -26,7 +26,7 @@
 	</rabbit:direct-exchange>
 
 
-	<bean id="myListener" class="com.khh.demo2.listener.MyListener"/>
+	<bean id="myListener" class="com.khh.u_spring.demo2.listener.MyListener"/>
 
 	<rabbit:listener-container connection-factory="connectionFactory">
 		<rabbit:listener ref="myListener"  queues="myQueue" />

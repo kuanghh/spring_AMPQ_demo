@@ -1,4 +1,4 @@
-package com.khh.demo3.listener;
+package com.khh.u_spring.demo3.listener;
 
 import com.khh.entity.User;
 import org.springframework.amqp.core.Message;

@@ -1,4 +1,4 @@
-package com.khh.demo2.test;
+package com.khh.u_spring.demo2.test;
 
 import com.khh.entity.User;
 import org.junit.Test;
