@@ -50,10 +50,9 @@ public class Receive {
          */
         channel.basicConsume(QUEUE_NAME,true,consumer);
 
-        Thread.sleep(2000);//确保信息能收到
-
-        channel.close();
-        connection.close();
+//        不关闭流，可确保程序一直监听队列
+//        channel.close();
+//        connection.close();
     }
 
 }
